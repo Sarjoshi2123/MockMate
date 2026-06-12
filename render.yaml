@@ -1,0 +1,40 @@
+databases:
+  - name: mockmate-db
+    databaseName: interviewdb
+    user: mockmate
+    plan: free
+
+services:
+  - type: web
+    name: mockmate-backend
+    runtime: java
+    plan: free
+    rootDir: backend
+
+    buildCommand: chmod +x ./mvnw && ./mvnw clean package -DskipTests
+
+    startCommand: java -jar target/interview-backend-0.0.1-SNAPSHOT.jar
+
+    healthCheckPath: /actuator/health
+
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+
+      # JWT — set this manually in the Render dashboard (do NOT commit the real value)
+      - key: JWT_SECRET
+        generateValue: true   # Render generates a random value; replace with your own 64-char hex
+
+      - key: JWT_EXPIRATION_MS
+        value: 86400000
+
+      # Render automatically injects DATABASE_URL from the linked database above
+      - key: DATABASE_URL
+        fromDatabase:
+          name: mockmate-db
+          property: connectionString
+
+      # Set this after your frontend is deployed
+      # e.g. https://mockmate.vercel.app
+      - key: ALLOWED_ORIGINS
+        value: http://localhost:5173

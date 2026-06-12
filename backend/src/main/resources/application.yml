@@ -1,8 +1,32 @@
+# ─── Active profile (override with SPRING_PROFILES_ACTIVE env var on Render) ───
 spring:
   profiles:
-    active: dev
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+
+# ─── Global settings (apply to all profiles) ───────────────────────────────────
+server:
+  port: ${PORT:8080}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
+
+# ─── Custom application configuration ──────────────────────────────────────────
+app:
+  jwtSecret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+  jwtExpirationMs: ${JWT_EXPIRATION_MS:86400000}
+  ai:
+    provider: mock
+  cors:
+    allowedOrigins: ${ALLOWED_ORIGINS:http://localhost:5173,http://localhost:3000}
 
 ---
+# ─── DEV profile (H2 in-memory) ────────────────────────────────────────────────
 spring:
   config:
     activate:
@@ -25,29 +49,26 @@ spring:
     show-sql: false
     open-in-view: false
 
-# Custom application configuration
-app:
-  jwtSecret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
-  jwtExpirationMs: 86400000
-  ai:
-    provider: mock
-
-server:
-  port: 8080
-
 ---
+# ─── PROD profile (PostgreSQL on Render) ───────────────────────────────────────
 spring:
   config:
     activate:
       on-profile: prod
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:interviewdb}
-    username: ${DB_USER:postgres}
-    password: ${DB_PASSWORD:password}
+    url: ${DATABASE_URL}
     driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 5
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
     show-sql: false
     open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
