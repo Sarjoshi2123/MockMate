@@ -13,7 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
      * Set ALLOWED_ORIGINS env var on Render once your frontend is deployed.
      * Example: https://mockmate.vercel.app,https://www.mockmate.com
      */
-    @Value("${app.cors.allowedOrigins:http://localhost:5173,http://localhost:3000}")
+    @Value("${app.cors.allowedOrigins:http://https://mockmate-jwoj.onrender.com:5173,http://https://mockmate-jwoj.onrender.com:3000}")
     private String allowedOrigins;
 
     @Override

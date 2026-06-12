@@ -23,7 +23,7 @@ app:
   ai:
     provider: mock
   cors:
-    allowedOrigins: ${ALLOWED_ORIGINS:http://localhost:5173,http://localhost:3000}
+    allowedOrigins: ${ALLOWED_ORIGINS:http://https://mockmate-jwoj.onrender.com:5173,http://https://mockmate-jwoj.onrender.com:3000}
 
 ---
 # ─── DEV profile (H2 in-memory) ────────────────────────────────────────────────

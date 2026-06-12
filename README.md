@@ -156,8 +156,8 @@ cd backend
 ./mvnw spring-boot:run
 ```
 
-> The backend starts on **http://localhost:8080** with an H2 in-memory database.
-> H2 Console available at http://localhost:8080/h2-console
+> The backend starts on **http://https://mockmate-jwoj.onrender.com:8080** with an H2 in-memory database.
+> H2 Console available at http://https://mockmate-jwoj.onrender.com:8080/h2-console
 
 ### 3. Start the Frontend
 
@@ -167,11 +167,11 @@ npm install
 npm run dev
 ```
 
-> The frontend starts on **http://localhost:5173**
+> The frontend starts on **http://https://mockmate-jwoj.onrender.com:5173**
 
 ### 4. Open the App
 
-Navigate to **http://localhost:5173** in your browser, create an account, and start practicing!
+Navigate to **http://https://mockmate-jwoj.onrender.com:5173** in your browser, create an account, and start practicing!
 
 ---
 
@@ -236,7 +236,7 @@ Sign Up / Login  →  Dashboard  →  Configure Interview  →  Answer Questions
 ### Production Environment Variables
 
 ```env
-DB_HOST=localhost
+DB_HOST=https://mockmate-jwoj.onrender.com
 DB_PORT=5432
 DB_NAME=interviewdb
 DB_USER=postgres
